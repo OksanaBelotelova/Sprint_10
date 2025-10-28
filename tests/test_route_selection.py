@@ -1,6 +1,7 @@
 import allure
+import pytest
 from pages.route_selection import RouteSelection
-from data import Message
+from data import Message, SelectRouteTab
 
 class TestRouteSelection:
     
@@ -28,3 +29,77 @@ class TestRouteSelection:
         expected_message = Message.message
 
         assert actual_message == expected_message
+
+
+    @allure.title('Переключение между видами маршрута("Оптимальный"\"Быстрый")')   
+    @allure.description('При переключении между видами маршрута (Оптимальный\Быстрый) происходит смена активного таба и пересчет времени и стоимости маршрута')
+    def test_switching_between_optimal_and_fast_route_types(self, driver):
+        route = RouteSelection(driver)
+        
+        route.enter_from_address()
+        route.enter_where_address()
+        route.click_optimal_tab()
+
+        active_tab = route.check_tab_is_active()
+        expected_active_tab = SelectRouteTab.optimal_tab
+        price_and_time_msg = route.check_message()
+        expected_price_and_time_msg = Message.optimal_tab_msg
+
+        assert active_tab == expected_active_tab
+        assert price_and_time_msg == expected_price_and_time_msg
+
+        route.click_fast_tab()
+        active_tab = route.check_tab_is_active()
+        expected_active_tab = SelectRouteTab.fast_tab
+        price_and_time_msg = route.check_message()
+        expected_price_and_time_msg = Message.active_tab_msg
+
+        assert active_tab == expected_active_tab
+        assert price_and_time_msg == expected_price_and_time_msg
+
+
+    @allure.title('Переключение на вид маршрута "Свой"')   
+    @allure.description('При переключении на вид маршрута Свой происходит смена активного таба и становятся активны типы передвижения ')
+    @pytest.mark.parametrize("type", RouteSelection.TYPES_OF_MOVEMENT)
+    def test_your_own_route_type(self, driver, type):
+        route = RouteSelection(driver)
+        
+        route.enter_from_address()
+        route.enter_where_address()
+        route.click_your_own_tab()
+
+        active_tab = route.check_tab_is_active()
+        expected_active_tab = SelectRouteTab.your_own_tab
+
+        assert  active_tab == expected_active_tab
+
+        active_type_of_movement = route.check_types_of_movement_are_active(type)
+
+        assert active_type_of_movement
+
+    @allure.title('')
+    @allure.description('При выборе вида маршрута Быстрый активна кнопка Вызвать такси')
+    def test_call_a_taxi_button(self, driver):
+        route = RouteSelection(driver)
+        
+        route.enter_from_address()
+        route.enter_where_address()
+
+        call_a_taxi_button = route.check_call_a_taxi_button()
+
+        assert call_a_taxi_button.is_displayed()
+
+
+    @allure.title('')
+    @allure.description('При выборе вида маршрута Свой, типа передвижения Драйв активна кнопка Забронировать')
+    def test_reserve_button(self,driver):
+        route = RouteSelection(driver)
+        
+        route.enter_from_address()
+        route.enter_where_address()
+        route.click_your_own_tab()
+        route.click_driver_type()
+        reserve_button = route.check_reserve_button()
+
+        assert reserve_button.is_displayed()
+

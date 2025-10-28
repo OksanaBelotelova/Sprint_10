@@ -17,13 +17,13 @@ class BasePage:
     def wait_until_clickable(self,element, time = 10 ):
         WebDriverWait(self.driver, time).until(expected_conditions.element_to_be_clickable(element))
 
-    def wait_until_visible(self,element, time = 10):
+    def wait_until_visible(self,element, time = 15):
         WebDriverWait(self.driver, time).until(expected_conditions.presence_of_element_located((element)))
 
     def find_element(self, element):
         return self.driver.find_element(*element)
     
-    @allure.step('Зполни поле "Откуда"')
+    @allure.step('Заполни поле "Откуда"')
     def enter_from_address(self):
         self.find_element(self.FROM_FIELD).send_keys(Addresses.first_address)
 
@@ -45,3 +45,5 @@ class BasePage:
     def check_point_B(self):
         point_B = str(self.POINTS).format(Addresses.second_address)
         return point_B
+    
+    
