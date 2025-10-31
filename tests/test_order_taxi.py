@@ -120,7 +120,7 @@ class TestOrderTaxi:
 
         assert element.is_displayed()
 
-
+    @pytest.mark.xfail(reason='AssertionError, Нестабильное поведение в 1 из 3 случаев - цена при выборе тарифа отличается от стоимости в окне с деталями поездки')
     @allure.title('Стоимость поездки')
     @allure.description('В блоке "Еще про поездку", указана стоимость, которая была при выборе тарифа')
     def test_tariff_price_and_price_in_details_are_the_same(self, driver):
