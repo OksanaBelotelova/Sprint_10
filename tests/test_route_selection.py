@@ -10,8 +10,7 @@ class TestRouteSelection:
     def test_route_selection_section(self, driver):
         route = RouteSelection(driver)
 
-        route.enter_from_address()
-        route.enter_where_address()
+        route.input_two_different_addresses_for_route()
 
         route_selection_section = route.check_route_selection_section()
 
@@ -36,8 +35,7 @@ class TestRouteSelection:
     def test_switching_between_optimal_and_fast_route_types(self, driver):
         route = RouteSelection(driver)
         
-        route.enter_from_address()
-        route.enter_where_address()
+        route.input_two_different_addresses_for_route()
         route.click_optimal_tab()
 
         active_tab = route.check_tab_is_active()
@@ -59,13 +57,12 @@ class TestRouteSelection:
 
 
     @allure.title('Переключение на вид маршрута "Свой"')   
-    @allure.description('При переключении на вид маршрута Свой происходит смена активного таба и становятся активны типы передвижения ')
+    @allure.description('При переключении на вид маршрута "Свой" происходит смена активного таба и становятся активны типы передвижения ')
     @pytest.mark.parametrize("type", RouteSelection.TYPES_OF_MOVEMENT)
     def test_your_own_route_type(self, driver, type):
         route = RouteSelection(driver)
         
-        route.enter_from_address()
-        route.enter_where_address()
+        route.input_two_different_addresses_for_route()
         route.click_your_own_tab()
 
         active_tab = route.check_tab_is_active()
@@ -77,26 +74,26 @@ class TestRouteSelection:
 
         assert active_type_of_movement
 
-    @allure.title('')
-    @allure.description('При выборе вида маршрута Быстрый активна кнопка Вызвать такси')
+
+    @allure.title('Проверка кнопки "Вызвать такси"')
+    @allure.description('При выборе вида маршрута "Быстрый" активна кнопка "Вызвать такси"')
     def test_call_a_taxi_button(self, driver):
         route = RouteSelection(driver)
         
-        route.enter_from_address()
-        route.enter_where_address()
-
+        route.input_two_different_addresses_for_route()
+        route.click_fast_tab()
+        
         call_a_taxi_button = route.check_call_a_taxi_button()
 
         assert call_a_taxi_button.is_displayed()
 
 
-    @allure.title('')
-    @allure.description('При выборе вида маршрута Свой, типа передвижения Драйв активна кнопка Забронировать')
+    @allure.title('Проверка кнопки "Забронировать"')
+    @allure.description('При выборе вида маршрута "Свой" и типа передвижения "Драйв" активна кнопка "Забронировать"')
     def test_reserve_button(self,driver):
         route = RouteSelection(driver)
         
-        route.enter_from_address()
-        route.enter_where_address()
+        route.input_two_the_same_addresses_for_route()
         route.click_your_own_tab()
         route.click_driver_type()
         reserve_button = route.check_reserve_button()

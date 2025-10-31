@@ -23,6 +23,31 @@ class TypesOfMovement:
     bicycle = 'Велосипед'
     scooter = 'Самокат'
     drive = 'Драйв'
-    #types_of_movement = [RouteSelection.CAR, RouteSelection.ON_FOOT, RouteSelection.TAXI, RouteSelection.BICYCLE, RouteSelection.SCOOTER, RouteSelection.DRIVE]
 
+class TariffCards:
+    tariff_working = 'Рабочий'
+    tariff_sleepy = 'Сонный'
+    tariff_holiday = 'Отпускной'
+    tariff_talkative = 'Разговорчивый'
+    tariff_consolation = 'Утешительный'
+    tariff_glossy = 'Глянцевый'
+    tariff_working_description = 'Для деловых особ, которых отвлекаю'
+    tariff_sleepy_description = 'Для тех, кто не выспался'
+    tariff_holiday_description = 'Если пришла пора отдохнуть'
+    tariff_talkative_description = 'Если мысли не выходят из головы'
+    tariff_consolation_description = 'Если хочется свернуться калачиком'
+    tariff_glossy_description = 'Если нужно блистать'
+    Tariff_cards_description = {
+                                'Рабочий' : 'Для деловых особ, которых отвлекают',
+                                'Сонный' : 'Для тех, кто не выспался',
+                                'Отпускной' : 'Если пришла пора отдохнуть',
+                                'Разговорчивый' : 'Если мысли не выходят из головы',
+                                'Утешительный' : 'Если хочется свернуться калачиком',
+                                'Глянцевый' : 'Если нужно блистать'
+                                }
+    
+class OrderTaxiElements:
+    waiting_for_a_car_title = 'Поиск машины'
+    completed_order_window_title = 'мин. и приедет'
+    
 

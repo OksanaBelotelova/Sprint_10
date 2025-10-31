@@ -1,7 +1,5 @@
 import allure
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions
-from selenium.webdriver.support.wait import WebDriverWait
 from pages.base_page import BasePage
 
 class RouteSelection(BasePage):
@@ -22,8 +20,7 @@ class RouteSelection(BasePage):
     TYPES_OF_MOVEMENT = [CAR, ON_FOOT, TAXI, BICYCLE, SCOOTER, DRIVER]
     CALL_A_TAXI_BUTTON = [By. XPATH, './/button[text() = "Вызвать такси"]']
     RESERVE_BUTTON = [By. XPATH, './/button[text() = "Забронировать"]']
-
-
+   
     def __init__(self, driver):
         super().__init__(driver)
 
@@ -60,6 +57,8 @@ class RouteSelection(BasePage):
     def check_types_of_movement_are_active(self, element):
         if "disabled" not in self.find_element(element).get_attribute("class"):
             return True
+        else:
+            return False
         
     @allure.step('Проверь кнопку "Вызвать такси"')
     def check_call_a_taxi_button(self):
@@ -76,4 +75,9 @@ class RouteSelection(BasePage):
         self.wait_until_clickable(self.RESERVE_BUTTON)
         return self.find_element(self.RESERVE_BUTTON)
     
+    @allure.step('Нажми на кнопку "Вызвать такси"')
+    def click_call_a_taxi_button(self):
+        self.wait_until_clickable(self.CALL_A_TAXI_BUTTON)
+        self.find_element(self.CALL_A_TAXI_BUTTON).click()
 
+    
